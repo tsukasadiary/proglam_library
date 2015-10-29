@@ -176,7 +176,7 @@ public:
 
 // minimum spanning tree --- kruskal
 template< typename COST >
-class MST {
+class MinimumSpanningTree {
 private:
 	struct Edge {
 		int from, to; COST cost;
@@ -189,7 +189,7 @@ private:
 	Vec< Edge > edges;
 	
 public:
-	MST(int n) : V(n) {}
+	MinimumSpanningTree(int n) : V(n) {}
 	
 	void addEdge(int from, int to, COST cost) {
 		edges.push_back(from, to, cost);
@@ -213,7 +213,7 @@ public:
 };
 
 // lowest common ancester
-class LCA {
+class LowestCommonAncester {
 public:
 	struct Result {
 		vector< int > depth;
@@ -253,7 +253,7 @@ private:
 	}
 	
 public:
-	LCA(const vector< vector< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {}
+	LowestCommonAncester(const vector< vector< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {}
 	
 	Result generate(int root) {
 		depth.assign(N, 0);
@@ -275,7 +275,7 @@ public:
 };
 
 // bipartite matching
-class BipMatch {
+class BipartiteMatching {
 private:
 	int V;
 	Vec< Vec< int > > adj;
@@ -283,7 +283,7 @@ private:
 	Vec< bool > used;
 	
 public:
-	BipMatch(int n_) : V(n_), adj(n_, Vec< int >()), match(n_, -1), used(n_, 0) {}
+	BipartiteMatching(int n_) : V(n_), adj(n_, Vec< int >()), match(n_, -1), used(n_, 0) {}
 	
 	void addEdge(int u, int v) {
 		adj[u].push_back(v);
@@ -503,8 +503,8 @@ public:
 	}
 };
 
-// Strongly Connected Component
-class SCC {
+// Strongly Connected Component Decomposition
+class StronglyConnectedComponentDecomposition {
 public:
 	struct Result {
 		Vec< int > topol;
@@ -533,12 +533,12 @@ private:
 	}
 	
 public:
-	SCC(const Vec< Vec< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {
+	StronglyConnectedComponentDecomposition(const Vec< Vec< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {
 		rev_adj.assign(N, Vec< int >());
 		for_(v,0,N) for (int u : adj[v]) rev_adj[u].push_back(v);
 	}
 	
-	Result scc() {
+	Result decomposition() {
 		used.assign(N, false);
 		rev_order.clear();
 		topol.assign(N, -1);
@@ -575,7 +575,7 @@ public:
 };
 
 // Heavy Light Decomposition
-class H_L_Decomp {
+class HeavyLightDecomposition {
 public:
 	struct Node {
 		int parent;
@@ -633,7 +633,7 @@ private:
 	}
 	
 public:
-	H_L_Decomp(const Vec< Vec< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {}
+	HeavyLightDecomposition(const Vec< Vec< int > >& _adj_) : N(_adj_.size()), adj(_adj_) {}
 	
 	Result decomposition(int root) {
 		part_max.assign(N, pii(-1, -1));

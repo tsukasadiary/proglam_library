@@ -240,13 +240,13 @@ public:
 
 // BIT (fenwick tree)
 template< typename DATA >
-class BIT {
+class FenwickTree {
 private:
 	int size__;
 	Vec< DATA > data;
 	
 public:
-	BIT(int n) : size__(n), data(n + 1, DATA()) {}
+	FenwickTree(int n) : size__(n), data(n + 1, DATA()) {}
 	
 	DATA sum(int i) {
 		DATA res = DATA();
