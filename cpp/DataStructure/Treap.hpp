@@ -4,7 +4,7 @@
 
 template< typename T >
 class Treap {
-private:
+private: // parts
 	unsigned int rnd() {
 		static unsigned int x = 123456789, y = 362436069, z = 521288629, w = 88675123;
 		unsigned int t = (x ^ (x << 11));
@@ -20,15 +20,17 @@ private:
 		Node(T v, int p) : val(v), data(v), pri(p), cnt(1) { lch = rch = nullptr; }
 	};
 	
-	int count(Node* t) { return t ? t->cnt : 0; }
-	T data(Node* t) { return t ? t->data : T(iINF); }
-	
 	Node *root;
+	
+private: // main function
+	int count(Node* t) { return t ? t->cnt : 0; }
+	T data(Node* t) { return t ? t->data : T(iINF); }	
+	T calc(T val1, T val2) { return min(val1, val2); }
 	
 	Node* update(Node *t) {
 		if (!t) return t;
 		t->cnt = count(t->lch) + count(t->rch) + 1;
-		t->data = min(min(data(t->lch), data(t->rch)), t->val);
+		t->data = calc(calc(data(t->lch), data(t->rch)), t->val);
 		return t;
 	}
 	
@@ -82,16 +84,16 @@ private:
 		return t;
 	}
 	
-	void dump(Node* t) {
+	void dump(Node* t, ostream& os) {
 		if (!t) return;
-		cout << "(";
+		os << "(";
 		dump(t->lch);
-		cout << t->val;
+		os << t->val;
 		dump(t->rch);
-		cout << ")";
+		os << ")";
 	}
 	
-public:
+public: // public function
 	Treap() : root(nullptr) {}
 	
 	void insert(int k, T val) { root = insert(root, k, val, rnd()); }
@@ -99,10 +101,35 @@ public:
 	Node* find(int k) { return find(root, k); }
 	int size() { return count(root); }
 	
-	void dump() {
-		dump(root);
-		cout << endl;
+	void dump(ostream& os) {
+		dump(root, os);
+		os << endl;
 	}
 	
 	~Treap() { while (root) erase(0); }
+	
+public: // query implement
+	void shift(int l, int r) {// AOJ1508-RMQ- : [l,r) right-shift
+		pnn a, b, c;
+		a = split(root, r);
+		b = split(a.first, r - 1);
+		c = split(b.first, l);
+		root = merge(c.first, b.second);
+		root = merge(root, c.second);
+		root = merge(root, a.second);
+	}
+	
+	T query(int l, int r, Node* t) {
+		int c = count(t);
+		
+		if (l >= c || r <= 0) return T(iINF);
+		if (l <= 0 && r >= c) return data(t);
+		
+		c = count(t->lch);
+		int res = calc(query(l, r, t->lch), query(l - c - 1, r - c - 1, t->rch));
+		if (l <= c && c < r) res = calc(res, t->val);
+		return res;
+	}
+	
+	T query(int l, int r) { return query(l, r, root); }
 };
