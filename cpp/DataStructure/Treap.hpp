@@ -13,11 +13,12 @@ private: // parts
 	}
 	
 	struct Node {
-		T val, data;
+		T val, data, add;
 		Node *lch, *rch;
 		int pri, cnt;
+		bool rev;
 		
-		Node(T v, int p) : val(v), data(v), pri(p), cnt(1) { lch = rch = nullptr; }
+		Node(T v, int p) : val(v), data(v), add(T(0)), pri(p), cnt(1), rev(false) { lch = rch = nullptr; }
 	};
 	
 	Node *root;
@@ -27,6 +28,22 @@ private: // main function
 	T data(Node* t) { return t ? t->data : T(iINF); }	
 	T calc(T val1, T val2) { return min(val1, val2); }
 	
+	void push(Node* t) {
+		if (t && t->rev) {
+			swap(t->lch, t->rch);
+			if (t->lch) t->lch->rev ^= true;
+			if (t->rch) t->rch->rev ^= true;
+			t->rev = false;
+		}
+		
+		if (t && t->add != 0) {
+			t->val += t->add;
+			if (t->lch) t->lch->add += t->add;
+			if (t->rch) t->rch->add += t->add;
+			t->add = 0;
+		}
+	}
+	
 	Node* update(Node *t) {
 		if (!t) return t;
 		t->cnt = count(t->lch) + count(t->rch) + 1;
@@ -35,6 +52,8 @@ private: // main function
 	}
 	
 	Node* merge(Node* l, Node* r) {
+		push(l); push(r);
+		
 		if (!l || !r) return l ? l : r;
 	
 		if (l->pri > r->pri) {
@@ -50,6 +69,8 @@ private: // main function
 	
 	pnn split(Node* t, int k) {
 		if (!t) return pnn(nullptr, nullptr);
+		
+		push(t);
 		
 		if (k <= count(t->lch)) {
 			pnn s = split(t->lch, k);
@@ -78,6 +99,7 @@ private: // main function
 	}
 	
 	Node* find(Node* t, int k) {
+		push(t);
 		int c = count(t->lch);
 		if (k < c) return find(t->lch, k);
 		if (k > c) return find(t->rch, k - c - 1);
@@ -87,9 +109,9 @@ private: // main function
 	void dump(Node* t, ostream& os) {
 		if (!t) return;
 		os << "(";
-		dump(t->lch);
+		dump(t->lch, os);
 		os << t->val;
-		dump(t->rch);
+		dump(t->rch, os);
 		os << ")";
 	}
 	
@@ -116,6 +138,24 @@ public: // query implement
 		c = split(b.first, l);
 		root = merge(c.first, b.second);
 		root = merge(root, c.second);
+		root = merge(root, a.second);
+	}
+	
+	void reverse(int l, int r) {
+		pnn a, b;
+		a = split(root, r);
+		b = split(a.first, l);
+		b.second->rev ^= true;
+		root = merge(b.first, b.second);
+		root = merge(root, a.second);
+	}
+	
+	void rangeAdd(int l, int r, int v) {
+		pnn a, b;
+		a = split(root, r);
+		b = split(a.first, l);
+		b.second->add += v;
+		root = merge(b.first, b.second);
 		root = merge(root, a.second);
 	}
 	
