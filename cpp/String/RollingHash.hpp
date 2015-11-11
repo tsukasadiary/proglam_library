@@ -1,6 +1,3 @@
-#ifndef ROLLING_HASH_HPP
-#define ROLLING_HASH_HPP
-
 #ifndef TSUKASA_DIARY_S_TEMPLATE
 #include "../template.h"
 #endif
@@ -32,5 +29,3 @@ public:
 		return hash[r] - hash[l - 1] * mul[r - l + 1];
 	}
 };
-
-#endif // ROLLING_HASH_HPP
