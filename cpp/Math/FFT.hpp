@@ -25,7 +25,7 @@ void FFT(Vec< Complex >& f, int n, bool inverse) {
 }
 
 template< typename T >
-Vec< T > comvolution(Vec< T >& a, Vec< T >& b) {
+Vec< T > convolution(Vec< T >& a, Vec< T >& b) {
 	int n = 1;
 	while (n <= size_of(a) + size_of(b)) n <<= 1;
 	
