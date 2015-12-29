@@ -1,3 +1,6 @@
+#ifndef SAFFIX_ARRAY_HPP
+#define SAFFIX_ARRAY_HPP
+
 #ifndef TSUKASA_DIARY_S_TEMPLATE
 #include "../template.h"
 #endif
@@ -23,7 +26,7 @@ private:
 		}
 	};
 	
-	void makeSaffixArray() {
+	void construct() {
 		sa.assign(n + 1, 0);
 		rank_sf.assign(n + 1, 0);
 		tmp.assign(n + 1, 0);
@@ -34,9 +37,9 @@ private:
 		}
 		
 		for (k = 1; k <= n; k <<= 1) {
-			sort(allof(sa), CompareSA(n, k, rank_sf));
-			tmp[sa[0]] = 0;
 			CompareSA csa(n, k, rank_sf);
+			sort(allof(sa), csa);
+			tmp[sa[0]] = 0;
 			for_(i,1,n+1) tmp[sa[i]] = tmp[sa[i - 1]] + (csa(sa[i - 1], sa[i]) ? 1 : 0);
 			for_(i,0,n+1) rank_sf[i] = tmp[i];
 		}
@@ -44,13 +47,31 @@ private:
 	
 public:
 	SaffixArray(const string& _text_)
-	: text(_text_), n(_text_.size()) {
-		makeSaffixArray();
+	: text(_text_), n(_text_.size()) { construct(); }
+	
+	int length() const { return n; }
+	
+	int getSA(int i) const { return sa[i]; }
+	
+	const string& getText() const { return text; }
+	
+	int find(const string& p) const {
+		int lb = 0, ub = n, m = p.size();
+		
+		while (ub - lb > 1) {
+			int med = (ub + lb) / 2;
+			if (text.compare(sa[med], m, p) < 0) lb = med;
+			else ub = med;
+		}
+		
+		return text.compare(sa[ub], m, p) == 0 ? sa[ub] : -1;
 	}
 	
-	void dump(ostream& os) {
+	void dump(ostream& os) const {
 		for_(i,0,n+1) {
 			os << sa[i] << " " << (sa[i] < n ? text.substr(sa[i]) : "") << endl;
 		}
 	}
 };
+
+#endif // SAFFIX_ARRAY_HPP
