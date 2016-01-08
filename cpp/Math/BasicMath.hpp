@@ -1,6 +1,9 @@
 #ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "template.h"
+#include "../template.h"
 #endif
+
+#ifndef BASIC_MATH_HPP
+#define BASIC_MATH_HPP
 
 lint fact(lint x) {
 	if (x <= 1) return 1;
@@ -14,8 +17,9 @@ lint combination(lint n, lint m) {
 	return res;
 }
 
-lint POW(lint x, lint k) {
-	lint res = 1;
+template< typename T >
+T POW(T x, T k) {
+	T res = 1;
 	
 	while (k > 0) {
 		if (k & 1) res *= x;
@@ -40,14 +44,18 @@ bool isPrime(int n) {
 	return 1;
 }
 
-lint extgcd(lint a, lint b, lint& x, lint& y) {
-	lint g = 1; x = 1; y = 0;
+template< typename T >
+T extgcd(T a, T b, T& x, T& y) {
+	T g = 1; x = 1; y = 0;
 	if (b != 0) g = extgcd(b, a % b, y, x), y -= (a / b) * x;
 	return g;
 }
 
-lint invMod(lint a, lint mod) {
-	lint x, y;
+template< typename T >
+T invMod(T a, T mod) {
+	T x, y;
 	if (extgcd(a, mod, x, y) == -1) return (x + mod) % mod;
 	return 0;
 }
+
+#endif // BASIC_MATH_HPP
