@@ -8,7 +8,7 @@ template< typename FLOW, typename COST >
 class PrimalDual {
 private:
 	typedef pair< COST, int > pci;
-	static const COST cINF = COST(iINF);
+	const COST cINF;
 	
 	struct Edge {
 		int to, rev; FLOW cap; COST cost;
@@ -22,7 +22,7 @@ private:
 	Vec< int > prevv, preve;
 	
 public:
-	PrimalDual(int n) : V(n), edges(n), pot(n, COST()),
+	PrimalDual(int n) : cINF(COST(1e9)), V(n), edges(n), pot(n, COST()),
 						cost(n, COST()), prevv(n, -1), preve(n, -1) {}
 	
 	void addEdge(int from, int to, FLOW cap, COST cost) {
