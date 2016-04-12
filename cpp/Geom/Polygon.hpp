@@ -57,6 +57,28 @@ Polygon convex_hull(Vec< Point > vp) {
 	return res;
 }
 
+// 凸包のカット
+pair< Polygon, Polygon > convex_cut(const Polygon& p, const Line& o) {
+	Vec< Point > vL, vR;
+
+	int N = p.size();
+
+	for_(i,0,N) {
+		Point a = p.at(i), b = p.at(i + 1);
+		
+		if (ccw(o.s, o.t, a) != -1) vL.push_back(a);
+		else vR.push_back(a);
+		
+		if (ccw(o.s, o.t, a) * ccw(o.s, o.t, b) < 0) {
+			Point cp = cross_point(Line(a, b), o);
+			vL.push_back(cp);
+			vR.push_back(cp);
+		}
+	}
+	
+	return pair< Polygon, Polygon >(convex_hull(vL), convex_hull(vR));
+}
+
 // 最遠点対間距離
 pair< pii, Double > caliper(const Polygon& p) {
 	int i = 0, j = 0;
