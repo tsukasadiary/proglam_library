@@ -1,11 +1,11 @@
 #ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "template.h"
+#include "../template.hpp"
 #endif
 
 // KMP
 class KMP {
 private:
-	vector<int> fail;
+	Vec<int> fail;
 	
 public:
 	KMP() {}

@@ -2,7 +2,7 @@
 #define SAFFIX_ARRAY_HPP
 
 #ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "../template.h"
+#include "../template.hpp"
 #endif
 
 class SaffixArray {
