@@ -1,5 +1,5 @@
 #ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "template.h"
+#include "../template.hpp"
 #endif
 
 // Segment Tree
@@ -15,6 +15,13 @@ private:
 	
 	DATA calc(DATA d1, DATA d2) { return min(d1, d2); }
 	
+	DATA query(int a, int b, int k, int l, int r) {
+		if (r <= a || b <= l) return (DATA)iINF;
+		if (a <= l && r <= b) return data[k];
+		return calc(query(a, b, left_t(k), l, center(l, r)),
+					query(a, b, right_t(k), center(l, r), r));
+	}
+	
 public:
 	SegmentTree(int n, DATA ini) {
 		for (size__ = 1; size__ < n; size__ <<= 1);
@@ -29,13 +36,6 @@ public:
 			k = (k - 1) >> 1;
 			data[k] = calc(data[left_t(k)], data[right_t(k)]);
 		}
-	}
-	
-	DATA query(int a, int b, int k, int l, int r) {
-		if (r <= a || b <= l) return (DATA)iINF;
-		if (a <= l && r <= b) return data[k];
-		return calc(query(a, b, left_t(k), l, center(l, r)),
-					query(a, b, right_t(k), center(l, r), r));
 	}
 	
 	DATA query(int a, int b) { return query(a, b, 0, 0, size__); }

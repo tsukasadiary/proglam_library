@@ -1,5 +1,5 @@
 #ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "template.h"
+#include "../template.hpp"
 #endif
 
 // Segment Tree with Lazy Evaluate
