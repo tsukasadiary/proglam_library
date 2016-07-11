@@ -3,7 +3,7 @@
 #endif
 
 // Segment Tree with Lazy Evaluate
-template< typename DATA >
+template< typename DATA, class CALC, DATA FAIL, DATA LAZY_INIT >
 class SegmentTreeLazy {
 private:
 	int size__;
@@ -14,19 +14,19 @@ private:
 	inline int center(int l, int r) { return (l + r) >> 1; }
 	
 private:
-	DATA calc(DATA d1, DATA d2) { return d1 + d2; }
+	DATA calc(DATA d1, DATA d2) { return CALC().calc(d1, d2); }
 	
-	void lazyCalc(int k, DATA val) { lazy[k] += val; }
+	void lazyCalc(int k, DATA val) { lazy[k] = CALC().lazyCalc(lazy[k], val); }
 	
 	inline void lazyEval(int l, int r, int k) {
-		data[k] += lazy[k] * (r - l);
+		data[k] = CALC().lazyEval(data[k], lazy[k], l, r);
 		
 		if (k < size__ - 1) {
 			lazyCalc(left_t(k), lazy[k]);
 			lazyCalc(right_t(k), lazy[k]);
 		}
 		
-		lazy[k] = DATA(0);
+		lazy[k] = LAZY_INIT;
 	}
 	
 	inline void updateAt(int k) { data[k] = calc(data[left_t(k)], data[right_t(k)]); }
@@ -49,7 +49,7 @@ private:
 	DATA query(int a, int b, int k, int l, int r) {
 		lazyEval(l, r, k);
 		
-		if (r <= a || b <= l) return 0;
+		if (r <= a || b <= l) return FAIL;
 		if (a <= l && r <= b) return data[k];
 		DATA res =  calc(query(a, b, left_t(k), l, center(l, r)),
 						 query(a, b, right_t(k), center(l, r), r));
@@ -72,4 +72,28 @@ public:
 	DATA query(int a, int b) { return query(a, b, 0, 0, size__); }
 	
 	int size() { return size__; }
+};
+
+template< typename T >
+class LazySumCalc {
+public:
+	inline T calc(T d1, T d2) { return d1 + d2; }
+	inline T lazyCalc(T lz, T val) { return lz + val; }
+	inline T lazyEval(T d, T lz, int l, int r) { return d + lz * (r - l); }
+};
+
+template< typename T >
+class LazyMaxCalc {
+public:
+	inline T calc(T d1, T d2) { return max(d1, d2); }
+	inline T lazyCalc(T lz, T val) { return lz + val; }
+	inline T lazyEval(T d, T lz, int l, int r) { return d + lz; }
+};
+
+template< typename T >
+class LazyMinCalc {
+public:
+	inline T calc(T d1, T d2) { return min(d1, d2); }
+	inline T lazyCalc(T lz, T val) { return lz + val; }
+	inline T lazyEval(T d, T lz, int l, int r) { return d + lz; }
 };

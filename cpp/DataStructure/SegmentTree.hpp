@@ -3,7 +3,7 @@
 #endif
 
 // Segment Tree
-template< typename DATA >
+template< typename DATA, class CALC, DATA FAIL >
 class SegmentTree {
 private:
 	int size__;
@@ -13,10 +13,10 @@ private:
 	inline int right_t(int k) { return (k << 1) + 2; }
 	inline int center(int l, int r) { return (l + r) >> 1; }
 	
-	DATA calc(DATA d1, DATA d2) { return min(d1, d2); }
+	DATA calc(DATA d1, DATA d2) { return CALC().calc(d1, d2); }
 	
 	DATA query(int a, int b, int k, int l, int r) {
-		if (r <= a || b <= l) return (DATA)iINF;
+		if (r <= a || b <= l) return FAIL;
 		if (a <= l && r <= b) return data[k];
 		return calc(query(a, b, left_t(k), l, center(l, r)),
 					query(a, b, right_t(k), center(l, r), r));
@@ -41,4 +41,16 @@ public:
 	DATA query(int a, int b) { return query(a, b, 0, 0, size__); }
 	
 	int size() { return size__; }
+};
+
+template< typename T >
+class MaxCalc {
+public:
+	inline T calc(T d1, T d2) { return max(d1, d2); }
+};
+
+template< typename T >
+class MinCalc {
+public:
+	inline T calc(T d1, T d2) { return min(d1, d2); }
 };
