@@ -22,7 +22,7 @@ public:
 	MinimumSpanningTree(int n) : V(n) {}
 	
 	void addEdge(int from, int to, COST cost) {
-		edges.push_back(from, to, cost);
+		edges.push_back(Edge(from, to, cost));
 	}
 	
 	COST getMinCost() {
