@@ -40,6 +40,7 @@ const int DX[4] = {0,1,0,-1}, DY[4] = {-1,0,1,0};
 const int DX_[8] = {0,1,1,1,0,-1,-1,-1}, DY_[8] = {-1,-1,0,1,1,1,0,-1};
 // variable update
 template< typename T > inline void modAdd(T& a, T b, T mod) { a = (a + b) % mod; }
+template< typename T > inline void modMul(T& a, T b, T mod) { a = (a * b) % mod; }
 template< typename T > inline void minUpdate(T& a, T b) { a = min(a, b); }
 template< typename T > inline void maxUpdate(T& a, T b) { a = max(a, b); }
 // converter
