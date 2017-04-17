@@ -7,7 +7,7 @@ using namespace std;
 
 template< typename T >
 void dump(const T& obj) {
-	for (int t : obj) cout << " " << t;
+	for (auto t : obj) cout << " " << t;
 	cout << endl;
 }
 
@@ -20,8 +20,8 @@ int main() {
 	iota(vec.begin(), vec.end(), 0);
 	dump(vec);
 	
-	list< int > lst(10);
-	iota(lst.begin(), lst.end(), 5);
+	list< char > lst(10);
+	iota(lst.begin(), lst.end(), 'a');
 	dump(lst);
 	
 	string str(26, '#');
