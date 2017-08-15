@@ -3,6 +3,7 @@
 競技プログラミングにおける、グラフのデータセット作成に役立てたい気持ち
 
 - 使用例 (src/test.cpp)
+
 	#include "GraphGenerator.hpp"
 	
 	int main() {
@@ -14,6 +15,7 @@
 	}
 
 - 出力例
+
 	10 20
 	6 0
 	8 4
