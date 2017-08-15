@@ -73,7 +73,7 @@ GraphData GraphGenerator::randomGraph(int n, int m) {
 	auto addEdge = [&](int u, int v) {
 		edge_set.insert(pii(u, v));
 		graph.addEdge(u, v);
-		uf.sameSet(u, v);
+		uf.unionSet(u, v);
 	};
 	
 	int add_count = 0;
