@@ -2,6 +2,18 @@
 
 競技プログラミングにおける、グラフのデータセット作成に役立てたい気持ち
 
+- 使用例 (src/test.cpp)
+	#include "GraphGenerator.hpp"
+	
+	int main() {
+		GraphGenerator gg;
+		GraphData graph = gg.randomGraph(10, 20);
+		graph.shuffleID();
+		graph.shuffleEdge();
+		graph.dump(std::cerr);
+	}
+
+- 出力例
 	10 20
 	6 0
 	8 4
