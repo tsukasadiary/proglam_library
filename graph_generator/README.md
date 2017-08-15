@@ -3,7 +3,8 @@
 競技プログラミングにおける、グラフのデータセット作成に役立てたい気持ち
 
 - 使用例 (src/test.cpp)
-
+	
+	```c
 	#include "GraphGenerator.hpp"
 	
 	int main() {
@@ -13,6 +14,7 @@
 		graph.shuffleEdge();
 		graph.dump(std::cerr);
 	}
+	```
 
 - 出力例
 
