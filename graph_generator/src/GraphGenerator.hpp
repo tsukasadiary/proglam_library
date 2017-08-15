@@ -77,7 +77,7 @@ GraphData GraphGenerator::randomGraph(int n, int m) {
 	};
 	
 	int add_count = 0;
-		while (add_count < n-1) {
+	while (add_count < n-1) {
 		int u = rnd.nextUInt(n), v = rnd.nextUInt(n);
 		if (invalid(u, v) || uf.sameSet(u, v)) continue;
 		addEdge(u, v);
