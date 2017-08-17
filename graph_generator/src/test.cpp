@@ -2,7 +2,7 @@
 
 int main() {
 	GraphGenerator gg;
-	GraphData graph = gg.randomGraph(10, 20);
+	GraphData graph = gg.cycleGraph(5);
 	graph.shuffleID();
 	graph.shuffleEdge();
 	

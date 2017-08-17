@@ -11,14 +11,29 @@ class GraphGenerator {
 public:
 	GraphGenerator() {}
 
+	GraphData pathGraph(int n);			 // n 頂点のパスグラフ
+	GraphData cycleGraph(int n);		 // n 頂点のサイクルグラフ
+	GraphData gridGraph(int X, int Y);	 // X * Y 頂点のグリッドグラフ
 	GraphData completeGraph(int n);		 // n 頂点の完全グラフ
-	GraphData gridGraph(int X, int Y);	 // X * Y 頂点のグリッドグラフ	
 	GraphData kBranchTree(int k, int h); // 各頂点からの分岐数 k、 高さ h の木
 	GraphData bunchGraph(int med);		 // 頂点数 med+2、頂点 0 と {1,...,med} の間、および {1,..,med} と頂点 med+1 の間に辺がある	
 	GraphData randomGraph(int n, int m); // n 頂点 m 辺からなるランダムグラフ
 };
 
 // 以下実装
+GraphData GraphGenerator::pathGraph(int n) {
+	GraphData graph{n, n-1};
+	for (int v=0; v<n-1; ++v) graph.addEdge(v, v+1);
+	return graph;
+}
+
+GraphData GraphGenerator::cycleGraph(int n) {
+	GraphData graph = pathGraph(n);
+	graph.m = n;
+	graph.addEdge(n-1, 0);
+	return graph;
+}
+
 GraphData GraphGenerator::completeGraph(int n) {
 	int m = n * (n-1) / 2;
 	GraphData graph{n, m};
