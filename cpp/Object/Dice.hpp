@@ -1,11 +1,5 @@
-#ifndef DICE_H
-#define DICE_H
+#include "../template.hpp"
 
-#ifndef TSUKASA_DIARY_S_TEMPLATE
-#include "template.h"
-#endif
-
-/*** Dice ***/
 enum DICE { TOP, BOTTOM, FRONT, BACK, LEFT, RIGHT, END };
 enum ROLL { NORTH_R, SOUTH_R, EAST_R, WEST_R, LEFT_R, RIGHT_R, END_R };
 	
@@ -66,18 +60,11 @@ public:
 		return res;
 	}
 	
-	int at(enum DICE d) const {
-		return dice[d];
-	}
-	
-	int at(int i) const {
-		return dice[i];
-	}
+	int at(enum DICE d) const { return dice[d]; }
+	int at(int i) const { return dice[i]; }
 	
 	bool operator == (const Dice& a) {
 		for_(i,TOP,END) if (this->at(i) != a.at(i)) return false;
 		return true;
 	}
 };
-
-#endif // DICE_H
