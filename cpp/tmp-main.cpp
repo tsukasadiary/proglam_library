@@ -15,7 +15,7 @@ template< typename T > using Vec = vector< T >;
 template< typename T > bool in_range(T x, T lb, T ub) { return lb <= x && x < ub; }
 template< typename T > bool in_range(T x, T y, T lb, T ub) { return in_range(x, lb, ub) && in_range(y, lb, ub); }
 
-template< typename T > void modAdd(T& a, T b, T mod) { a = (a + b) % mod; }
+template< typename T > void modAdd(T& a, T b, T mod) { a = (a + b + mod) % mod; }
 template< typename T > void modMul(T& a, T b, T mod) { a = (a * b) % mod; }
 template< typename T > void minUpdate(T& a, T b) { a = min(a, b); }
 template< typename T > void maxUpdate(T& a, T b) { a = max(a, b); }
