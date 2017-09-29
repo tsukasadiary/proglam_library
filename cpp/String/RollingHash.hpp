@@ -1,6 +1,4 @@
-#ifndef TSUKASA_DIARY_S_TEMPLATE
 #include "../template.hpp"
-#endif
 
 typedef unsigned long long ull;
 const ull BASE = 1e9 + 7;
@@ -21,11 +19,7 @@ private:
 	
 public:
 	RollingHash(string& _text_)
-	: N(_text_.size()), text(_text_), mul(N + 1, 1), hash(N + 1, 0) {
-		makeHash();
-	}
+	: N(_text_.size()), text(_text_), mul(N + 1, 1), hash(N + 1, 0) { makeHash(); }
 	
-	ull getHash(int l, int r) {
-		return hash[r] - hash[l - 1] * mul[r - l + 1];
-	}
+	ull getHash(int l, int r) { return hash[r] - hash[l - 1] * mul[r - l + 1]; }
 };

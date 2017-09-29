@@ -1,8 +1,5 @@
-#ifndef TSUKASA_DIARY_S_TEMPLATE
 #include "../template.hpp"
-#endif
 
-// Trie
 class Alphabet {
 public:
 	static const int N = 4;
@@ -26,18 +23,10 @@ private:
 	
 	Alphabet& alph;
 	vector< Node > node;
-	
-public:
-	Trie(Alphabet& alph_) : alph(alph_) {
-		node.push_back(Node(alph.N));
-	}
-	
-	void insert(string& str) {
-		insert(str, 0, 0);
-	}
-	
+
+private:
 	void insert(string& str, int i, int vi) {
-		if (i == size_of(str)) {
+		if (i == (int)str.size()) {
 			node[vi].end = true;
 			return;
 		}
@@ -48,21 +37,21 @@ public:
 			insert(str, i + 1, node[vi].link[ci]);
 		} else {
 			node.push_back(Node(alph.N));
-			node[vi].link[ci] = size_of(node) - 1;
+			node[vi].link[ci] = (int)node.size() - 1;
 			insert(str, i + 1, node[vi].link[ci]);
 		}
 	}
 	
-	bool find(string& str) {
-		return find(str, 0, 0);
-	}
-	
 	bool find(string& str, int i, int vi) {
-		if (i == size_of(str)) return node[vi].end;
-		
-		int ci = alph.toInt(str[i]);
-		
+		if (i == (int)str.size()) return node[vi].end;		
+		int ci = alph.toInt(str[i]);		
 		if (node[vi].link[ci] != -1) return find(str, i + 1, node[vi].link[ci]);
 		return false;
 	}
+	
+public:
+	Trie(Alphabet& __alph) : alph(__alph) { node.push_back(Node(alph.N)); }
+	
+	void insert(string& str) { insert(str, 0, 0); }
+	bool find(string& str) { return find(str, 0, 0); }
 };

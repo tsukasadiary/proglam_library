@@ -1,9 +1,7 @@
-#ifndef SAFFIX_ARRAY_HPP
-#define SAFFIX_ARRAY_HPP
+#ifndef __SAFFIX_ARRAY__
+#define __SAFFIX_ARRAY__
 
-#ifndef TSUKASA_DIARY_S_TEMPLATE
 #include "../template.hpp"
-#endif
 
 class SaffixArray {
 private:
@@ -74,4 +72,4 @@ public:
 	}
 };
 
-#endif // SAFFIX_ARRAY_HPP
+#endif
