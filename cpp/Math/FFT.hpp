@@ -1,4 +1,4 @@
-#include "BasicMath.hpp"
+#include "../template.hpp"
 
 // FFT
 typedef complex< double > Complex;
@@ -26,14 +26,14 @@ void FFT(Vec< Complex >& f, int n, bool inverse) {
 
 template< typename T >
 Vec< T > convolution(Vec< T >& a, Vec< T >& b) {
-	int n = 1;
-	while (n <= size_of(a) + size_of(b)) n <<= 1;
+	int n = 1, an = a.size(), bn = b.size();;
+	while (n <= an + bn) n <<= 1;
 	
 	Vec< Complex > ca, cb;
 	for_(i,0,n) {
-		if (i < size_of(a)) ca.push_back(Complex(a[i], 0));
+		if (i < an) ca.push_back(Complex(a[i], 0));
 		else ca.push_back(Complex(0, 0));
-		if (i < size_of(b)) cb.push_back(Complex(b[i], 0));
+		if (i < bn) cb.push_back(Complex(b[i], 0));
 		else cb.push_back(Complex(0, 0));
 	}
 	

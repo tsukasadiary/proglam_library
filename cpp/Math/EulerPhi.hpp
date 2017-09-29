@@ -1,3 +1,5 @@
+#include "../template.hpp"
+
 int eulerPhi(int n) {
 	int res = n;
 	
@@ -12,7 +14,7 @@ int eulerPhi(int n) {
 	return res;
 }
 
-Vec< int > eulerPhi(int MAX_N) {
+Vec< int > eulerPhiAll(int MAX_N) {
 	Vec< int > res(MAX_N);
 	for_(i,0,MAX_N) res[i] = i;
 	

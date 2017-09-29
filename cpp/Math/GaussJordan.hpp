@@ -1,7 +1,7 @@
 #include "MatrixOperation.hpp"
 
 Vec< double > gaussJordan(const Matrix< double >& A, const Vec< double >& b) {
-	int n = size_of(A);
+	int n = A.size();
 	Matrix< double > B(n, Vec< double >(n + 1));
 	
 	for_(i,0,n) for_(j,0,n) B[i][j] = A[i][j];

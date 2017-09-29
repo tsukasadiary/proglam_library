@@ -1,4 +1,6 @@
-#include "BasicMath.hpp"
+#include "../template.hpp"
+
+template< typename T > using Matrix = Vec< Vec< T > >;
 
 // matrix operation
 template< typename T >
@@ -26,22 +28,19 @@ Matrix< T > operator * (const Matrix< T >& a, const Matrix< T >& b) {
 }
 
 template< typename T >
-Matrix< T > MatrixI(int n) {
+Matrix< T > UnitMatrix(int n) {
 	Matrix< T > res(n, Vec< T >(n, T()));
 	for_(i,0,n) res[i][i] = T(1);
 	return res;
 }
 
 template< typename T >
-Matrix< T > POW(Matrix< T >& a, lint k) {
-	int n = size_of(a);
-	Matrix< T > res = MatrixI< T >(n);
-	
+Matrix< T > matrixPow(Matrix< T >& a, lint k) {
+	Matrix< T > res = UnitMatrix< T >(a.size());
 	while (k > 0) {
 		if (k & 1) res = res * a;
 		a = a * a;
 		k >>= 1;
-	}
-	
+	}	
 	return res;
 }
