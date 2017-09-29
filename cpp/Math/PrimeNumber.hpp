@@ -1,41 +1,27 @@
-#include "BasicMath.hpp"
+#include "../template.hpp"
 
 class PrimeNumber {
 private:
-	int upper;
-	Vec< int > primes;
-	Vec< int > prime_nums;
+	int MAX_NUM;
+	Vec< int > primes, prime_nums;
 	
 public:
-	PrimeNumber(int n) : upper(n) {
-		enum_primes();
-	}
+	PrimeNumber(int n) : MAX_NUM(n), prime_nums(MAX_NUM+1) { enum_primes(); }
 	
 	void enum_primes() {
-		primes.clear();
-		prime_nums.assign(upper + 1, 0);
-		Vec< bool > isprime(upper + 1, 1);
-		
-		for_(i,2,upper+1) {
+		Vec< bool > isprime(MAX_NUM + 1, true);
+		for_(i,2,MAX_NUM+1) {
 			if (isprime[i]) {
 				++prime_nums[i];
 				primes.push_back(i);
-				for (int j = 2 * i; j <= upper; j += i) isprime[j] = 0;
+				for (int j = 2 * i; j <= MAX_NUM; j += i) isprime[j] = 0;
 			}
-			
 			prime_nums[i] += prime_nums[i - 1];
 		}
 	}
 	
-	int prime_count(int upper_num) {
-		return prime_nums[upper_num];
-	}
-	
-	int prime_count(int mi, int mx) {
-		return prime_nums[mx] - prime_nums[mi - 1];
-	}
-	
-	int at(int i) {
-		return primes[i];
-	}
+	int getNum() { return primes.size(); }
+	int get(int i) { return primes[i]; }
+	int prime_count(int mx) { return prime_nums[mx]; }
+	int prime_count(int mi, int mx) { return prime_nums[mx] - prime_nums[mi - 1]; }
 };
