@@ -1,6 +1,6 @@
+#include "../template.hpp"
 #include <sys/time.h>
 
-// timer
 struct Timer {
 	struct timeval start, cur;
 	double limit;
