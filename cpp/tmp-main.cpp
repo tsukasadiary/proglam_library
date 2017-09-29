@@ -25,8 +25,8 @@ int bitCount(lint x) { return __builtin_popcountll(x); }
 
 const int dx[4] = {0,1,0,-1}, dy[4] = {-1,0,1,0};
 const int Dx[8] = {0,1,1,1,0,-1,-1,-1}, Dy[8] = {-1,-1,0,1,1,1,0,-1};
-
-
+const double EPS = 1e-9;
+const double PI = acos(-1);
 
 //--------------8---------------->> coding space <<-----------------8-------------//
 
