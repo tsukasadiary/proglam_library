@@ -1,18 +1,5 @@
 #include "../template.hpp"
 
-template< typename T >
-T genPow(T x, T k) {
-	T res = 1;
-	
-	while (k > 0) {
-		if (k & 1) res *= x;
-		x *= x;
-		k >>= 1;
-	}
-	
-	return res;
-}
-
 lint gcd(lint a, lint b) { return b != 0 ? gcd(b, a % b) : a; }
 lint lcm(lint a, lint b) { return a / gcd(a, b) * b; }
 
@@ -22,16 +9,29 @@ bool isPrime(int n) {
 	return 1;
 }
 
-template< typename T >
-T extgcd(T a, T b, T& x, T& y) {
-	T g = 1; x = 1; y = 0;
-	if (b != 0) g = extgcd(b, a % b, y, x), y -= (a / b) * x;
-	return g;
+lint extgcd(lint a, lint b, lint &x, lint &y) {
+	if (b == 0) {
+		x = 1;
+		y = 0;
+		return a;
+	}
+	lint d = extgcd(b, a % b, y, x);
+	y -= a / b * x;
+	return d;
 }
 
-template< typename T >
-T invMod(T a, T mod) {
-	T x, y;
-	if (extgcd(a, mod, x, y) == -1) return (x + mod) % mod;
-	return 0;
+lint invmod(lint a, lint m) {
+    lint x, y;
+    extgcd(a, m, x, y);
+    return (x % m + m) % m;
+}
+
+lint powmod(lint x, lint k, lint MOD) {
+	lint ret = 1;	
+	while (k > 0) {
+		if (k & 1) modMul(ret, x, MOD);
+		modMul(x, x, MOD);
+		k >>= 1;
+	}
+	return ret;
 }
