@@ -20,10 +20,10 @@ lint extgcd(lint a, lint b, lint &x, lint &y) {
 	return d;
 }
 
-lint invmod(lint a, lint m) {
+lint invmod(lint a, lint MOD) {
     lint x, y;
-    extgcd(a, m, x, y);
-    return (x % m + m) % m;
+    extgcd(a, MOD, x, y);
+    return (x % MOD + MOD) % MOD;
 }
 
 lint powmod(lint x, lint k, lint MOD) {
